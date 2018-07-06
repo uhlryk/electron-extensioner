@@ -1,13 +1,13 @@
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("electron"));
+		module.exports = factory(require("electron"), require("extensioner"));
 	else if(typeof define === 'function' && define.amd)
-		define(["electron"], factory);
+		define(["electron", "extensioner"], factory);
 	else {
-		var a = typeof exports === 'object' ? factory(require("electron")) : factory(root["electron"]);
+		var a = typeof exports === 'object' ? factory(require("electron"), require("extensioner")) : factory(root["electron"], root["extensioner"]);
 		for(var i in a) (typeof exports === 'object' ? exports : root)[i] = a[i];
 	}
-})(this, function(__WEBPACK_EXTERNAL_MODULE_2__) {
+})(this, function(__WEBPACK_EXTERNAL_MODULE_2__, __WEBPACK_EXTERNAL_MODULE_3__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -95,8 +95,11 @@ exports.handleEvent = handleEvent;
 
 var _electron = __webpack_require__(2);
 
+var _extensioner = __webpack_require__(3);
+
 var ipcEventRequest = "IPC_EVENT_REQUEST";
 var ipcEventResponse = "IPC_EVENT_RESPONSE";
+
 function callEvent(extensionEventName, requestData) {
     return new Promise(function (resolve) {
         _electron.ipcRenderer.send(ipcEventRequest, extensionEventName, requestData);
@@ -108,7 +111,7 @@ function callEvent(extensionEventName, requestData) {
 
 function handleEvent(extensionManager) {
     _electron.ipcMain.on(ipcEventRequest, function (evt, extensionEventName, requestData) {
-        var event = extensionManager.createEvent(extensionEventName);
+        var event = extensionManager.createEvent(extensionEventName, _extensioner.asyncListCompose);
         event(requestData).then(function (requestResult) {
             return evt.sender.send(ipcEventResponse, requestResult);
         });
@@ -120,6 +123,12 @@ function handleEvent(extensionManager) {
 /***/ (function(module, exports) {
 
 module.exports = require("electron");
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports) {
+
+module.exports = require("extensioner");
 
 /***/ })
 /******/ ]);

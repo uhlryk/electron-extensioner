@@ -47,6 +47,7 @@
     "eslint-plugin-node": "^5.1.1",
     "eslint-plugin-promise": "^3.5.0",
     "eslint-plugin-standard": "^3.0.1",
+    "extensioner": "^1.18.4",
     "husky": "^0.14.3",
     "istanbul": "^0.4.5",
     "lint-staged": "^6.0.0",
@@ -62,7 +63,8 @@
     "webpack2-externals-plugin": "^1.0.0"
   },
   "peerDependencies": {
-    "electron": "^1.0.0"
+    "electron": "^1.0.0",
+    "extensioner": "^1.18.3"
   },
   "dependencies": {},
   "lint-staged": {
