@@ -11,9 +11,8 @@ export function callEvent(extensionEventName, requestData) {
 }
 
 export function handleEvent(extensionManager) {
-    ipcMain.on(ipcEventRequest, async (evt, extensionEventName, requestData) => {
+    ipcMain.on(ipcEventRequest, (evt, extensionEventName, requestData) => {
         const event = extensionManager.createEvent(extensionEventName);
-        const requestResult = await event(requestData);
-        evt.sender.send(ipcEventResponse, requestResult);
+        event(requestData).then(requestResult => evt.sender.send(ipcEventResponse, requestResult));
     });
 }
