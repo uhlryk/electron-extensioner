@@ -1,0 +1,74 @@
+{
+  "name": "electron-extensioner",
+  "version": "0.0.1",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "prettier-all": "prettier --config .prettierrc --write 'src/**/*.js'",
+    "prettier-changed": "git diff --name-only --diff-filter=ACMRTU HEAD | grep \".*\\.js$\" | xargs prettier --config .prettierrc --write",
+    "test": "mocha --require source-map-support --require babel-register --require babel-polyfill --require init.mocha.js --check-leaks --timeout 3000 'src/**/*.spec.js'",
+    "coverage": "nyc --reporter=html --reporter=text mocha --require source-map-support --require babel-register --require babel-polyfill --require init.mocha.js --check-leaks --timeout 3000 'src/**/*.spec.js' && echo report available ./coverage/index.html",
+    "complexity": "plato -r --eslint .eslintrc --exclude .spec.js -d report src && echo report available ./report/index.html",
+    "linter": "eslint src",
+    "precommit": "lint-staged && npm run build && git add dist/ && npm run linter && npm test",
+    "build": "webpack --config webpack.babel.js",
+    "example": "npm run build-server && node --require babel-register example/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/uhlryk/function-overloader.git"
+  },
+  "keywords": [],
+  "author": "Krzysztof Sztompka <sztompka.krzysztof@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/uhlryk/function-overloader/issues"
+  },
+  "homepage": "https://github.com/uhlryk/function-overloader#readme",
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^8.2.4",
+    "babel-loader": "^7.1.1",
+    "babel-polyfill": "^6.23.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-es2016": "^6.24.1",
+    "babel-preset-es2017": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "babel-register": "^6.24.1",
+    "chai": "^4.0.2",
+    "dirty-chai": "^2.0.1",
+    "electron": "^2.0.4",
+    "eslint": "^4.19.1",
+    "eslint-config-prettier": "^2.5.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-mocha": "^4.11.0",
+    "eslint-plugin-node": "^5.1.1",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "husky": "^0.14.3",
+    "istanbul": "^0.4.5",
+    "lint-staged": "^6.0.0",
+    "mocha": "^5.2.0",
+    "mongo-mock": "^2.4.0",
+    "nyc": "^12.0.2",
+    "plato": "^1.7.0",
+    "prettier": "^1.6.1",
+    "sinon": "^2.3.6",
+    "sinon-chai": "^2.13.0",
+    "supertest": "^3.0.0",
+    "webpack": "^3.0.0",
+    "webpack2-externals-plugin": "^1.0.0"
+  },
+  "peerDependencies": {
+    "electron": "^1.0.0"
+  },
+  "dependencies": {},
+  "lint-staged": {
+    "*.js": [
+      "prettier --config .prettierrc --write",
+      "git add"
+    ]
+  }
+}
