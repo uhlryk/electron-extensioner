@@ -95,8 +95,8 @@ exports.handleEvent = handleEvent;
 
 var _electron = __webpack_require__(2);
 
-var ipcEventRequest = Symbol("IPC_EVENT_REQUEST");
-var ipcEventResponse = Symbol("IPC_EVENT_RESPONSE");
+var ipcEventRequest = "IPC_EVENT_REQUEST";
+var ipcEventResponse = "IPC_EVENT_RESPONSE";
 function callEvent(extensionEventName, requestData) {
     return new Promise(function (resolve) {
         _electron.ipcRenderer.send(ipcEventRequest, extensionEventName, requestData);

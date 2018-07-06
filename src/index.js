@@ -1,6 +1,6 @@
 import { ipcRenderer, ipcMain } from "electron";
-const ipcEventRequest = Symbol("IPC_EVENT_REQUEST");
-const ipcEventResponse = Symbol("IPC_EVENT_RESPONSE");
+const ipcEventRequest = "IPC_EVENT_REQUEST";
+const ipcEventResponse = "IPC_EVENT_RESPONSE";
 export function callEvent(extensionEventName, requestData) {
     return new Promise(resolve => {
         ipcRenderer.send(ipcEventRequest, extensionEventName, requestData);
